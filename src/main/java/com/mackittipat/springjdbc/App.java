@@ -23,15 +23,19 @@ public class App implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Running");
+        jdbcTemplate.execute("CREATE TABLE customer ( id INT, name VARCHAR(20) )");
+        log.info("Created customer table");
+
+        jdbcTemplate.execute("INSERT INTO customer (id, name) VALUES (1, 'Mac')");
+        log.info("Inserted customer table");
 
         List<Customer> customerList = jdbcTemplate.query(
                 "SELECT id, name FROM customer",
-                (rs, rowNum) -> new Customer(rs.getInt("id"), rs.getInt("name"))
+                (rs, rowNum) -> new Customer(rs.getInt("id"), rs.getString("name"))
         );
 
         customerList.forEach(c -> {
-            log.info(">>> " + c.toString());
+            log.info("Query : " + c.toString());
         });
     }
 }

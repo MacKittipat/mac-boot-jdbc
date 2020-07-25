@@ -8,5 +8,5 @@ import lombok.Data;
 public class Customer {
 
     private int id;
-    private int name;
+    private String name;
 }
